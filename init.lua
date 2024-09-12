@@ -1,3 +1,4 @@
+--https://neovim.io/doc/user/lua-guide.html
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -57,7 +58,7 @@ vim.api.nvim_create_autocmd("User",{
     callback = function ()
         if require("lazy.status").updates() == true then
             require("lazy").update({wait = true})
-            vim.cmd("q")
+            vim.cmd(":q")
         end
     end,
 })
