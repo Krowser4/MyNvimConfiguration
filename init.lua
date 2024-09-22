@@ -1,84 +1,101 @@
 --https://neovim.io/doc/user/lua-guide.html
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-    local out = vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--branch=stable",
-        lazyrepo,
-        lazypath,
-    })
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({
-            { "failed to clone lazy.nvim:\n", "errormsg" },
-            { out,                            "warningmsg" },
-            { "\npress any key to exit..." },
-        }, true, {})
-        vim.fn.getchar()
-        os.exit(1)
-    end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"--branch=stable",
+		lazyrepo,
+		lazypath,
+	})
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "failed to clone lazy.nvim:\n", "errormsg" },
+			{ out,                            "warningmsg" },
+			{ "\npress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.softtabstop = 4
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+vim.opt.expandtab = false
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
 
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+vim.opt.virtualedit = "block"
 vim.opt.termguicolors = true
 vim.opt.showmode = false
-vim.opt.virtualedit = "block"
-
-vim.opt.guicursor = "a:block"
-vim.opt.scrolloff = 10
 vim.opt.wrap = false
+vim.opt.scrolloff = 10
+vim.opt.guicursor = "a:block"
+vim.opt.list = true
+vim.opt.listchars = { tab = "> ", trail = "·", nbsp = "␣" }
+vim.opt.inccommand = "split"
+vim.opt.laststatus = 2
+vim.g.have_nerd_font = true
+
 vim.opt.incsearch = true
 --vim.opt.clipboard = "unnamed"
 vim.opt.modifiable = true
 vim.opt.autochdir = true
 
+vim.opt.shadafile = "NONE"
+
 MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+--vim.api.nvim_create_autocmd("User",{
+--    pattern = "LazyDone",
+--    callback = function ()
+--        local has_updates = require'lazy.status'.has_updates()
+--        print('has updates: ', has_updates)
+--        if has_updates == true then
+--            print('AAAAAAAAAAAA')
+--        end
+--       -- if require("lazy.status").has_updates() == true then
+--       --     print("AAAAAAAAAAAAAAAA")
+--       --     --require("lazy").update({wait = true})
+--       --     require("lazy").update()
+--       --     --vim.cmd(":q")
+--       -- end
+--    end,
+--})
+
 require("lazy").setup({
-    spec = require("plugins"),
-    install = { missing = true, colorscheme = { "industry" } },
-    checker = { enabled = true },
+	spec = require("plugins"),
+	install = { missing = true, colorscheme = { "industry" } },
+	checker = { enabled = true },
 })
-vim.api.nvim_create_autocmd("User",{
-    pattern = "LazyDone",
-    callback = function ()
-        if require("lazy.status").updates() == true then
-            require("lazy").update({wait = true})
-            vim.cmd(":q")
-        end
-    end,
-})
-            --require("lazy.status").updates,
 vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
 vim.keymap.set({ "i", "c" }, '""', '""<left>', MyOpts)
-vim.keymap.set({ "i", "c" }, "{", "{}<left>", MyOpts)
-vim.keymap.set({ "i", "c" }, "[", "[]<left>", MyOpts)
-vim.keymap.set({ "i", "c" }, "(", "()<left>", MyOpts)
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", {silent = true})
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", {silent = true})
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", {silent = true})
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", {silent = true})
-vim.api.nvim_set_keymap("n", "<leader>v", "<C-W>v", {silent = true})
-vim.api.nvim_set_keymap("n", "<leader>e", ":Explore<Enter>", {silent = true})
-vim.api.nvim_set_keymap("n", "<leader>h", ":noh<CR>", {silent = true})
-vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', {silent = true})
+vim.keymap.set({ "i", "c" }, "{<leader>", "{}", MyOpts)
+vim.keymap.set({ "i", "c" }, "[<leader>", "[]", MyOpts)
+vim.keymap.set({ "i", "c" }, "(<leader>", "()", MyOpts)
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", { silent = true })
+vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { silent = true })
+vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { silent = true })
+vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>v", "<C-W>v", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>e", ":Explore<Enter>", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>h", ":noh<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { silent = true })
+vim.keymap.set("x", "<leader>p", '"_dP', { silent = true })
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz", MyOpts)
 vim.keymap.set("n", "<C-u>", "<C-u>zz", MyOpts)
+vim.keymap.set("n", "J", "mzJ`z", MyOpts)
 
 --vs-like alt line movement
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", MyOpts)
@@ -93,22 +110,28 @@ vim.keymap.set("i", "<C-c>", '<esc>"*yya', MyOpts)
 vim.keymap.set("n", "<C-c>", '"*yy', MyOpts)
 vim.keymap.set("v", "<C-c>", '"*y', MyOpts)
 
---the i have no idea what it does corner
+--the "i have no idea what it does" corner
 vim.keymap.set("n", "<leader>z", "'z", MyOpts) --no idea why
-vim.keymap.set("n", "Q", "<nop>") --no idea what Q does
-vim.cmd.highlight({ "Error", "guibg=red" })       --UNTESTED
-vim.cmd.highlight({ "link", "Warning", "Error" }) --UNTESTED
---vim.cmd([[ same but in one line mode 
+vim.keymap.set("n", "Q", "<nop>")              --no idea what Q does
+vim.cmd.highlight({ "Error", "guibg=red" })
+vim.cmd.highlight({ "link", "Warning", "Error" })
+--vim.cmd([[ same but in one line mode
 --  highlight Error guibg=red
 --  highlight link Warning Error
 --]])
 
-pcall(require("lualine").setup)
-vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function ()
-        vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
-        vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
-        vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
-    end
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
 })
+--visual sugar
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = function()
+		vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
+		vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+	end,
+})
+pcall(require("lualine").setup)
 pcall(vim.cmd.colorscheme("kanagawa-wave"))
