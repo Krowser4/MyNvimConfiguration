@@ -37,7 +37,7 @@ vim.opt.virtualedit = "block"
 vim.opt.termguicolors = true
 vim.opt.showmode = false
 vim.opt.wrap = false
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 999
 vim.opt.guicursor = "a:block"
 vim.opt.list = true
 vim.opt.listchars = { tab = "> ", trail = "·", nbsp = "␣" }

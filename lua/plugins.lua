@@ -146,6 +146,13 @@ return {
 			lspconfig.pyright.setup({
 				capabilities = capabilities,
 				on_attach = onAttach,
+				settings = {
+					python = {
+						analysis = {
+							typeCheckingMode = "off"
+						}
+					}
+				},
 			})
 			lspconfig.clangd.setup({
 				capabilities = capabilities,
@@ -279,7 +286,8 @@ return {
 				mapping = cmp.mapping.preset.insert({
 					["<C-i>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
-							cmp.confirm()
+							-- cmp.confirm()
+							cmp.complete()
 						else
 							fallback()
 						end
@@ -297,7 +305,7 @@ return {
 					},
 					{ name = "buffer" },
 					{ name = "path" },
-					{ name = "cmdline" },
+					-- { name = "cmdline" },
 				}),
 			})
 			-- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
@@ -318,16 +326,19 @@ return {
 				},
 			})
 			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline({
-					["<C-i>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.complete()
-							-- cmp.confirm()
-						else
-							fallback()
-						end
-					end),
-				}),
+				mapping = cmp.mapping.preset.cmdline()
+
+				,
+				-- mapping = cmp.mapping.preset.cmdline({
+				-- 	["<C-i>"] = cmp.mapping(function(fallback)
+				-- 		if cmp.visible() then
+				-- 			-- cmp.complete()
+				-- 			cmp.confirm({select = false})
+				-- 		else
+				-- 			fallback()
+				-- 		end
+				-- 	end),
+				-- }),
 				sources = cmp.config.sources({
 					{ name = "path" },
 				}, {
@@ -349,6 +360,9 @@ return {
 			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 			log_level = "error",
 		},
+		config = function()
+			-- vim.keymap.set('c', ':aaaa <cword>', 'lua= <cword>', MyOpts)
+		end
 		---enables autocomplete for opts
 		---@module "auto-session"
 		--config = function ()
