@@ -143,15 +143,23 @@ return {
 				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
 				vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0 })
 			end
+			lspconfig.gdscript.setup({
+				capabilities = capabilities,
+				on_attach = onAttach,
+			})
+			lspconfig.gdshader_lsp.setup({
+				capabilities = capabilities,
+				on_attach = onAttach,
+			})
 			lspconfig.pyright.setup({
 				capabilities = capabilities,
 				on_attach = onAttach,
 				settings = {
 					python = {
 						analysis = {
-							typeCheckingMode = "off"
-						}
-					}
+							typeCheckingMode = "off",
+						},
+					},
 				},
 			})
 			lspconfig.clangd.setup({
@@ -284,14 +292,7 @@ return {
 				-- },
 
 				mapping = cmp.mapping.preset.insert({
-					["<C-i>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							-- cmp.confirm()
-							cmp.complete()
-						else
-							fallback()
-						end
-					end),
+					["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 				}),
 				-- mapping = cmp.mapping.preset.insert(),
 
@@ -304,20 +305,19 @@ return {
 						group_index = 0,
 					},
 					{ name = "buffer" },
-					{ name = "path" },
-					-- { name = "cmdline" },
+					-- { name = "path" },
 				}),
 			})
 			-- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
 			-- Set configuration for specific filetype.
 			--[[ cmp.setup.filetype('gitcommit', {
-                sources = cmp.config.sources({
-                    { name = 'git' },
-                }, {
-                    { name = 'buffer' },
-                })
-            })
-            require("cmp_git").setup() ]]
+					sources = cmp.config.sources({
+						{ name = 'git' },
+					}, {
+						{ name = 'buffer' },
+					})
+				})
+				require("cmp_git").setup() ]]
 			--
 			cmp.setup.cmdline({ "/", "?" }, {
 				mapping = cmp.mapping.preset.cmdline(),
@@ -327,7 +327,6 @@ return {
 			})
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline()
-
 				,
 				-- mapping = cmp.mapping.preset.cmdline({
 				-- 	["<C-i>"] = cmp.mapping(function(fallback)
@@ -354,23 +353,39 @@ return {
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
-		opts = {
-			session_lens = { mappings = {} },
-			enabled = false,
-			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-			log_level = "error",
-		},
 		config = function()
-			-- vim.keymap.set('c', ':aaaa <cword>', 'lua= <cword>', MyOpts)
-		end
-		---enables autocomplete for opts
-		---@module "auto-session"
-		--config = function ()
-		--    require('auto-session').setup({
-		--        --enabled = false,
-		--        --suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-		--        --log_level = 'error',
-		--    })
-		--end
+			SessionName = ""
+			SessionExists = false
+			require("auto-session").setup({
+				root_dir = vim.fn.getcwd(),
+				session_lens = { mappings = {} },
+				enabled = false,
+				suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+				log_level = "error",
+			})
+			vim.api.nvim_create_user_command("Save", function()
+				vim.cmd("SessionSave "..SessionName)
+			end, {})
+			vim.api.nvim_create_autocmd("VimEnter", {
+				nested = true,
+				callback = function()
+					SessionName = string.gsub(vim.fn.getcwd(), "\\", "")
+					SessionName = string.gsub(SessionName, ":", "")
+					local saveFile = io.open(SessionName..'.vim', 'r')
+					if saveFile then
+						SessionExists = true
+						saveFile:close()
+						vim.cmd("SessionRestore "..SessionName)
+					end
+				end,
+			})
+			vim.api.nvim_create_autocmd("VimLeave", {
+				callback = function()
+					if SessionExists then
+						vim.cmd("SessionSave "..SessionName)
+					end
+				end,
+			})
+		end,
 	},
 }

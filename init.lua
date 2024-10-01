@@ -29,6 +29,7 @@ vim.opt.expandtab = false
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
+vim.opt.smartindent = false
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -36,7 +37,7 @@ vim.opt.relativenumber = true
 vim.opt.virtualedit = "block"
 vim.opt.termguicolors = true
 vim.opt.showmode = false
-vim.opt.wrap = false
+-- vim.opt.wrap = false
 vim.opt.scrolloff = 999
 vim.opt.guicursor = "a:block"
 vim.opt.list = true
@@ -72,7 +73,7 @@ vim.g.maplocalleader = " "
 --       -- end
 --    end,
 --})
-
+IsSessionSaved = false
 require("lazy").setup({
 	spec = require("plugins"),
 	install = { missing = true, colorscheme = { "industry" } },
