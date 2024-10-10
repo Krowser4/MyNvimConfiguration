@@ -182,7 +182,6 @@ return {
 					else
 						print("No workspace found")
 					end
-
 					client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
 						runtime = {
 							version = "LuaJIT",
@@ -221,7 +220,7 @@ return {
 				event = "VeryLazy",
 				should_attach = function(bufnr)
 					return vim.api.nvim_buf_get_name(bufnr):match("(.*).lua$")
-							or vim.api.nvim_buf_get_name(bufnr):match("(.*).py$")
+						or vim.api.nvim_buf_get_name(bufnr):match("(.*).py$")
 					-- or vim.api.nvim_buf_get_name(bufnr):match("(.*).txt$")
 				end,
 				sources = {
@@ -300,10 +299,10 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 				}, {
-					{
-						name = "lazydev",
-						group_index = 0,
-					},
+					-- {
+					-- 	name = "lazydev",
+					-- 	group_index = 0,
+					-- },
 					{ name = "buffer" },
 					-- { name = "path" },
 				}),
@@ -326,8 +325,7 @@ return {
 				},
 			})
 			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline()
-				,
+				mapping = cmp.mapping.preset.cmdline(),
 				-- mapping = cmp.mapping.preset.cmdline({
 				-- 	["<C-i>"] = cmp.mapping(function(fallback)
 				-- 		if cmp.visible() then
@@ -364,28 +362,47 @@ return {
 				log_level = "error",
 			})
 			vim.api.nvim_create_user_command("Save", function()
-				vim.cmd("SessionSave "..SessionName)
+				vim.cmd("SessionSave " .. SessionName)
 			end, {})
-			vim.api.nvim_create_autocmd("VimEnter", {
+			-- vim.api.nvim_create_autocmd("VimEnter", {
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
 				nested = true,
 				callback = function()
 					SessionName = string.gsub(vim.fn.getcwd(), "\\", "")
 					SessionName = string.gsub(SessionName, ":", "")
-					local saveFile = io.open(SessionName..'.vim', 'r')
+					local saveFile = io.open(SessionName .. ".vim", "r")
 					if saveFile then
 						SessionExists = true
 						saveFile:close()
-						vim.cmd("SessionRestore "..SessionName)
+						vim.cmd("SessionRestore " .. SessionName)
 					end
 				end,
 			})
 			vim.api.nvim_create_autocmd("VimLeave", {
 				callback = function()
 					if SessionExists then
-						vim.cmd("SessionSave "..SessionName)
+						vim.cmd("SessionSave " .. SessionName)
 					end
 				end,
 			})
+		end,
+	},
+	{
+		"stevearc/oil.nvim",
+		---@module 'oil'
+		---@type oil.SetupOpts
+		dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+		config = function()
+			require("oil").setup({
+				keymaps = {
+					["-"] = "actions.parent",
+					["<CR>"] = "actions.select",
+				},
+				default_file_explorer = false,
+				use_default_keymaps = false,
+			})
+			vim.keymap.set("n", "<leader><leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 		end,
 	},
 }
