@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/AppData/Local/nvim
+cd V:/lua
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,12 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +76 ~/AppData/Local/nvim/init.lua
-badd +1 health://
-badd +350 ~/AppData/Local/nvim/lua/plugins.lua
+badd +1 V:/lua/plugins.lua
+badd +1 V:/init.lua
 argglobal
 %argdel
-edit ~/AppData/Local/nvim/init.lua
+edit V:/init.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -38,7 +37,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
 exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 argglobal
-balt ~/AppData/Local/nvim/lua/plugins.lua
+balt V:/lua/plugins.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -49,19 +48,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 76 - ((26 * winheight(0) + 26) / 53)
+let s:l = 1 - ((0 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 76
+keepjumps 1
 normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/AppData/Local/nvim/lua/plugins.lua", ":p")) | buffer ~/AppData/Local/nvim/lua/plugins.lua | else | edit ~/AppData/Local/nvim/lua/plugins.lua | endif
+if bufexists(fnamemodify("V:/lua/plugins.lua", ":p")) | buffer V:/lua/plugins.lua | else | edit V:/lua/plugins.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/AppData/Local/nvim/lua/plugins.lua
+  silent file V:/lua/plugins.lua
 endif
-balt ~/AppData/Local/nvim/init.lua
+balt V:/init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -72,13 +71,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 345 - ((26 * winheight(0) + 26) / 53)
+let s:l = 1 - ((0 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 345
-normal! 05|
+keepjumps 1
+normal! 0
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
 exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1
