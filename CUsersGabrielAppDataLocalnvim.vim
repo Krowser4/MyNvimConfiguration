@@ -14,10 +14,10 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/AppData/Local/nvim/init.lua
-badd +398 ~/AppData/Local/nvim/lua/plugins.lua
+badd +418 ~/AppData/Local/nvim/lua/plugins.lua
 badd +3 health://
 badd +1 ~/AppData/Local/nvim/lua/tefdfdst.lua
-badd +0 ~/AppData/Local/nvim/lua/dfdfsfdsf.lua
+badd +1 ~/AppData/Local/nvim/lua/dfdfsfdsf.lua
 argglobal
 %argdel
 edit ~/AppData/Local/nvim/init.lua
@@ -62,7 +62,7 @@ if bufexists(fnamemodify("~/AppData/Local/nvim/lua/plugins.lua", ":p")) | buffer
 if &buftype ==# 'terminal'
   silent file ~/AppData/Local/nvim/lua/plugins.lua
 endif
-balt ~/AppData/Local/nvim/lua/plugins.lua
+balt ~/AppData/Local/nvim/init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -73,13 +73,13 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 398 - ((42 * winheight(0) + 26) / 53)
+let s:l = 418 - ((52 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 398
-normal! 019|
-lcd ~/AppData/Local/nvim/lua
+keepjumps 418
+normal! 0
+lcd ~/AppData/Local/nvim
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
