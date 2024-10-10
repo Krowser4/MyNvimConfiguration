@@ -395,14 +395,10 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
 		config = function()
 			require("oil").setup({
-				-- keymaps = {
-				-- 	["-"] = "actions.parent",
-				-- 	["<CR>"] = "actions.select",
-				-- },
-				default_file_explorer = false,
+				-- default_file_explorer = false,
 				use_default_keymaps = false,
 			})
-			vim.keymap.set("n", "<leader><leader>e", "<CMD>Oil<CR>")
+			vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>")
 			vim.keymap.set("n", "-", function()
 				if vim.bo.filetype == "oil" then
 					require("oil.actions").parent.callback()

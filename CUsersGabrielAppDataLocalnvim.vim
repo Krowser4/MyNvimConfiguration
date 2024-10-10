@@ -14,7 +14,7 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/AppData/Local/nvim/init.lua
-badd +418 ~/AppData/Local/nvim/lua/plugins.lua
+badd +401 ~/AppData/Local/nvim/lua/plugins.lua
 badd +3 health://
 badd +1 ~/AppData/Local/nvim/lua/tefdfdst.lua
 badd +1 ~/AppData/Local/nvim/lua/dfdfsfdsf.lua
@@ -50,11 +50,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 105 - ((26 * winheight(0) + 26) / 53)
+let s:l = 62 - ((26 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 105
+keepjumps 62
 normal! 0
 wincmd w
 argglobal
@@ -73,12 +73,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 418 - ((52 * winheight(0) + 26) / 53)
+let s:l = 401 - ((39 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 418
-normal! 0
+keepjumps 401
+normal! 028|
 lcd ~/AppData/Local/nvim
 wincmd w
 2wincmd w

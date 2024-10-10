@@ -57,22 +57,6 @@ MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
---vim.api.nvim_create_autocmd("User",{
---    pattern = "LazyDone",
---    callback = function ()
---        local has_updates = require'lazy.status'.has_updates()
---        print('has updates: ', has_updates)
---        if has_updates == true then
---            print('AAAAAAAAAAAA')
---        end
---       -- if require("lazy.status").has_updates() == true then
---       --     print("AAAAAAAAAAAAAAAA")
---       --     --require("lazy").update({wait = true})
---       --     require("lazy").update()
---       --     --vim.cmd(":q")
---       -- end
---    end,
---})
 IsSessionSaved = false
 require("lazy").setup({
 	spec = require("plugins"),
@@ -89,7 +73,7 @@ vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>v", "<C-W>v", { silent = true })
-vim.api.nvim_set_keymap("n", "<leader>e", ":Explore<Enter>", { silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>e", ":Explore<Enter>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>h", ":noh<CR>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { silent = true })
 vim.keymap.set("x", "<leader>p", '"_dP', { silent = true })
