@@ -396,6 +396,11 @@ return {
 				use_default_keymaps = false,
 			})
 			vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>")
+			vim.keymap.set("n", "<leader>r", function()
+				if vim.bo.filetype == "oil" then
+					require("oil.actions").refresh.callback()
+				end
+			end)
 			vim.keymap.set("n", "-", function()
 				if vim.bo.filetype == "oil" then
 					require("oil.actions").parent.callback()
