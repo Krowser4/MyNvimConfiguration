@@ -13,11 +13,9 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/AppData/Local/nvim/init.lua
-badd +401 ~/AppData/Local/nvim/lua/plugins.lua
-badd +3 health://
-badd +1 ~/AppData/Local/nvim/lua/tefdfdst.lua
-badd +1 ~/AppData/Local/nvim/lua/dfdfsfdsf.lua
+badd +76 ~/AppData/Local/nvim/init.lua
+badd +1 health://
+badd +350 ~/AppData/Local/nvim/lua/plugins.lua
 argglobal
 %argdel
 edit ~/AppData/Local/nvim/init.lua
@@ -40,6 +38,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
 exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 argglobal
+balt ~/AppData/Local/nvim/lua/plugins.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -50,11 +49,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 62 - ((26 * winheight(0) + 26) / 53)
+let s:l = 76 - ((26 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 62
+keepjumps 76
 normal! 0
 wincmd w
 argglobal
@@ -73,15 +72,13 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 401 - ((39 * winheight(0) + 26) / 53)
+let s:l = 345 - ((26 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 401
-normal! 028|
-lcd ~/AppData/Local/nvim
+keepjumps 345
+normal! 05|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
 exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1

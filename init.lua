@@ -21,7 +21,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end
 vim.opt.rtp:prepend(lazypath)
-
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
@@ -57,7 +56,7 @@ MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-IsSessionSaved = false
+IsSessionSave =false
 require("lazy").setup({
 	spec = require("plugins"),
 	install = { missing = true, colorscheme = { "industry" } },

@@ -220,7 +220,7 @@ return {
 				event = "VeryLazy",
 				should_attach = function(bufnr)
 					return vim.api.nvim_buf_get_name(bufnr):match("(.*).lua$")
-						or vim.api.nvim_buf_get_name(bufnr):match("(.*).py$")
+							or vim.api.nvim_buf_get_name(bufnr):match("(.*).py$")
 					-- or vim.api.nvim_buf_get_name(bufnr):match("(.*).txt$")
 				end,
 				sources = {
@@ -347,42 +347,42 @@ return {
 	},
 	{
 		"rmagatti/auto-session",
-		-- lazy = false,
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
 		config = function()
-			SessionName = ""
+			SessionName = "SavedSession"
+			SessionLocation = ""
 			SessionExists = false
 			require("auto-session").setup({
-				root_dir = vim.fn.getcwd(),
 				session_lens = { mappings = {} },
 				enabled = false,
 				suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 				log_level = "error",
 			})
 			vim.api.nvim_create_user_command("Save", function()
-				vim.cmd("SessionSave " .. SessionName)
+				SessionLocation = vim.fn.getcwd()
+				require("auto-session").SaveSessionToDir(SessionLocation, SessionName)
 			end, {})
-			-- vim.api.nvim_create_autocmd("VimEnter", {
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "VeryLazy",
 				nested = true,
 				callback = function()
-					SessionName = string.gsub(vim.fn.getcwd(), "\\", "")
-					SessionName = string.gsub(SessionName, ":", "")
-					local saveFile = io.open(SessionName .. ".vim", "r")
+					SessionLocation = vim.fn.getcwd()
+					local saveFile = io.open(SessionLocation .. "//" .. SessionName .. ".vim", "r")
+					print(vim.fn.getcwd())
 					if saveFile then
+						print(vim.fn.getcwd())
 						SessionExists = true
 						saveFile:close()
-						vim.cmd("SessionRestore " .. SessionName)
+						require("auto-session").RestoreSessionFromDir(SessionLocation, SessionName, false)
 					end
 				end,
 			})
 			vim.api.nvim_create_autocmd("VimLeave", {
 				callback = function()
 					if SessionExists then
-						vim.cmd("SessionSave " .. SessionName)
+						require("auto-session").SaveSessionToDir(SessionLocation, SessionName, false)
 					end
 				end,
 			})
