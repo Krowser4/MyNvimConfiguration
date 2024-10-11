@@ -363,12 +363,16 @@ return {
 			vim.api.nvim_create_user_command("Save", function()
 				require("auto-session").SaveSessionToDir(SessionLocation, SessionName)
 			end, {})
+			vim.api.nvim_create_user_command("Exit", function()
+				SessionExists = false
+				vim.cmd("wqa")
+			end, {})
 			vim.api.nvim_create_autocmd("User", {
-				pattern = "VeryLazy",
+				pattern = "LazyDone",
 				nested = true,
 				callback = function()
 					SessionLocation = vim.fn.getcwd()
-					local saveFile = io.open(SessionLocation .. SessionName .. ".vim", "r")
+					local saveFile = io.open(SessionLocation .. "/" .. SessionName .. ".vim", "r")
 					if saveFile then
 						SessionExists = true
 						saveFile:close()

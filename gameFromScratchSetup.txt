@@ -1,0 +1,13 @@
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build> .\vcvarsall.bat | this try to put in the beggining bat file
+
+to add:
+call C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat x64
+
+startsUtils.bat file
+@echo off
+subst v: C:\Users\Gabriel\AppData\Local\nvim
+subst w: C:\workInProgress
+call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat x64"
+
+add this to environmental variable "path"
+C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE
