@@ -68,9 +68,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end
 })
 vim.keymap.set("n", "<leader>b", function ()
-	local batchFile = vim.fn.findfile("build.bat", StartingFile)
-	if batchFile then
+	local batchFile = vim.fn.findfile("build.bat", StartingFile.."**")
+	if batchFile ~= "" then
 		vim.cmd("!cmd /c " .. batchFile)
+	else
+		print("dsfsaf")
 	end
 end)
 vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
