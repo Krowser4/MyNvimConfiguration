@@ -1,13 +1,13 @@
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build> .\vcvarsall.bat | this try to put in the beggining bat file
-
-to add:
-call C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat x64
-
-startsUtils.bat file
+- startsUtils.bat file
 @echo off
 subst v: C:\Users\Gabriel\AppData\Local\nvim
 subst w: C:\workInProgress
-call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat x64"
+pushd "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\"
+vcvarsall.bat x64
+popd
 
-add this to environmental variable "path"
+- to open microsoft visual studio from command line
+start devenv
+
+- add this to environmental variable "path" if the starts utils doesn't give you devenv
 C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE

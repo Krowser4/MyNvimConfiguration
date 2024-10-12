@@ -56,12 +56,23 @@ MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-IsSessionSave =false
 require("lazy").setup({
 	spec = require("plugins"),
 	install = { missing = true, colorscheme = { "industry" } },
 	checker = { enabled = true },
 })
+StartingFile = ""
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function ()
+		StartingFile = vim.fn.getcwd()
+	end
+})
+vim.keymap.set("n", "<leader>b", function ()
+	local batchFile = vim.fn.findfile("build.bat", StartingFile)
+	if batchFile then
+		vim.cmd("!cmd /c " .. batchFile)
+	end
+end)
 vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
 vim.keymap.set({ "i", "c" }, '""', '""<left>', MyOpts)
 vim.keymap.set({ "i", "c" }, "{<leader>", "{}", MyOpts)

@@ -299,10 +299,10 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 				}, {
-					-- {
-					-- 	name = "lazydev",
-					-- 	group_index = 0,
-					-- },
+					{
+						name = "lazydev",
+						group_index = 0,
+					},
 					{ name = "buffer" },
 					-- { name = "path" },
 				}),
@@ -362,6 +362,7 @@ return {
 			})
 			vim.api.nvim_create_user_command("Save", function()
 				require("auto-session").SaveSessionToDir(SessionLocation, SessionName)
+				SessionExists = true
 			end, {})
 			vim.api.nvim_create_user_command("Exit", function()
 				SessionExists = false

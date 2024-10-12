@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/AppData/Local/nvim/lua
+cd C:/Neovim/share/nvim/runtime/doc
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,20 +13,22 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/AppData/Local/nvim/init.lua
-badd +367 ~/AppData/Local/nvim/lua/plugins.lua
-badd +11 ~/AppData/Local/nvim/gameFromScratchSetup.txt
-badd +2 C:/Users/desktop.ini
-badd +4 C:/startUtils.bat
+badd +72 V:/init.lua
+badd +302 V:/lua/plugins.lua
+badd +8 V:/gameFromScratchSetup.txt
 argglobal
 %argdel
-edit ~/AppData/Local/nvim/init.lua
+edit V:/init.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -37,10 +39,12 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+exe '1resize ' . ((&lines * 26 + 27) / 55)
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
+exe '2resize ' . ((&lines * 26 + 27) / 55)
+exe 'vert 2resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 3resize ' . ((&columns * 118 + 118) / 236)
 argglobal
-balt ~/AppData/Local/nvim/lua/plugins.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -51,19 +55,39 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 79 - ((25 * winheight(0) + 26) / 53)
+let s:l = 72 - ((12 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 79
-normal! 0
+keepjumps 72
+normal! 05|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/AppData/Local/nvim/lua/plugins.lua", ":p")) | buffer ~/AppData/Local/nvim/lua/plugins.lua | else | edit ~/AppData/Local/nvim/lua/plugins.lua | endif
+enew | setl bt=help
+help file-searching@en
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1584 - ((12 * winheight(0) + 13) / 26)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1584
+normal! 057|
+wincmd w
+argglobal
+if bufexists(fnamemodify("V:/lua/plugins.lua", ":p")) | buffer V:/lua/plugins.lua | else | edit V:/lua/plugins.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/AppData/Local/nvim/lua/plugins.lua
+  silent file V:/lua/plugins.lua
 endif
-balt ~/AppData/Local/nvim/init.lua
+balt V:/init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -74,16 +98,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 367 - ((26 * winheight(0) + 26) / 53)
+let s:l = 302 - ((0 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 367
+keepjumps 302
 normal! 0
 wincmd w
 2wincmd w
+exe '1resize ' . ((&lines * 26 + 27) / 55)
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
+exe '2resize ' . ((&lines * 26 + 27) / 55)
+exe 'vert 2resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 3resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
