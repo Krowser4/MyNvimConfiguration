@@ -1,24 +1,24 @@
 --https://neovim.io/doc/user/lua-guide.html
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"--branch=stable",
-		lazyrepo,
-		lazypath,
-	})
-	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_echo({
-			{ "failed to clone lazy.nvim:\n", "errormsg" },
-			{ out, "warningmsg" },
-			{ "\npress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
-	end
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--branch=stable",
+    lazyrepo,
+    lazypath,
+  })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "failed to clone lazy.nvim:\n", "errormsg" },
+      { out, "warningmsg" },
+      { "\npress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 vim.opt.splitright = true
@@ -59,23 +59,23 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require("lazy").setup({
-	spec = require("plugins"),
-	install = { missing = true, colorscheme = { "industry" } },
-	checker = { enabled = true },
+  spec = require("plugins"),
+  install = { missing = true, colorscheme = { "industry" } },
+  checker = { enabled = true },
 })
 StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		StartingFile = vim.fn.getcwd()
-	end,
+  callback = function()
+    StartingFile = vim.fn.getcwd()
+  end,
 })
 vim.keymap.set("n", "<leader>b", function()
-	local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
-	if batchFile ~= "" then
-		vim.cmd("!cmd /c " .. batchFile)
-	else
-		print("dsfsaf")
-	end
+  local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
+  if batchFile ~= "" then
+    vim.cmd("!cmd /c " .. batchFile)
+  else
+    print("dsfsaf")
+  end
 end)
 vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
 vim.keymap.set({ "i", "c" }, '""', '""<left>', MyOpts)
@@ -120,17 +120,17 @@ vim.cmd.highlight({ "link", "Warning", "Error" })
 --]])
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 --visual sugar
 vim.api.nvim_create_autocmd("ColorScheme", {
-	callback = function()
-		vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
-		vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
-		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
-	end,
+  callback = function()
+    vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
+    vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+  end,
 })
 pcall(require("lualine").setup)
 pcall(vim.cmd.colorscheme("kanagawa-wave"))
