@@ -13,7 +13,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "failed to clone lazy.nvim:\n", "errormsg" },
-			{ out,                            "warningmsg" },
+			{ out, "warningmsg" },
 			{ "\npress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -24,11 +24,13 @@ vim.opt.rtp:prepend(lazypath)
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.expandtab = false
+vim.opt.expandtab = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+-- vim.opt.indentexpr = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
-vim.opt.smartindent = false
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -63,12 +65,12 @@ require("lazy").setup({
 })
 StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function ()
+	callback = function()
 		StartingFile = vim.fn.getcwd()
-	end
+	end,
 })
-vim.keymap.set("n", "<leader>b", function ()
-	local batchFile = vim.fn.findfile("build.bat", StartingFile.."**")
+vim.keymap.set("n", "<leader>b", function()
+	local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
 	if batchFile ~= "" then
 		vim.cmd("!cmd /c " .. batchFile)
 	else
@@ -102,14 +104,14 @@ vim.keymap.set("n", "<A-j>", ":m .+1<CR>=<CR>", MyOpts)
 vim.keymap.set("i", "<A-k>", "<esc>:m .-2<CR>=<CR>i", MyOpts)
 vim.keymap.set("i", "<A-j>", "<esc>:m .+1<CR>=<CR>i", MyOpts)
 -- obsidian-like copy paste
-vim.keymap.set("i", "<C-v>", '<esc>"*pi', MyOpts)
+vim.keymap.set("i", "<C-v>", '<esc>"*pa', MyOpts)
 vim.keymap.set("i", "<C-c>", '<esc>"*yya', MyOpts)
 vim.keymap.set("n", "<C-c>", '"*yy', MyOpts)
 vim.keymap.set("v", "<C-c>", '"*y', MyOpts)
 
 --the "i have no idea what it does" corner
 vim.keymap.set("n", "<leader>z", "'z", MyOpts) --no idea why
-vim.keymap.set("n", "Q", "<nop>")              --no idea what Q does
+vim.keymap.set("n", "Q", "<nop>") --no idea what Q does
 vim.cmd.highlight({ "Error", "guibg=red" })
 vim.cmd.highlight({ "link", "Warning", "Error" })
 --vim.cmd([[ same but in one line mode

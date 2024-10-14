@@ -13,8 +13,8 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +71 V:/init.lua
-badd +302 V:/lua/plugins.lua
+badd +27 V:/init.lua
+badd +19 V:/lua/plugins.lua
 badd +8 V:/gameFromScratchSetup.txt
 argglobal
 %argdel
@@ -25,6 +25,10 @@ set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -35,8 +39,11 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+exe '1resize ' . ((&lines * 26 + 27) / 55)
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
+exe '2resize ' . ((&lines * 26 + 27) / 55)
+exe 'vert 2resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 3resize ' . ((&columns * 118 + 118) / 236)
 argglobal
 balt V:/lua/plugins.lua
 setlocal fdm=manual
@@ -49,12 +56,33 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 71 - ((26 * winheight(0) + 26) / 53)
+let s:l = 27 - ((12 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 71
-normal! 067|
+keepjumps 27
+normal! 08|
+wincmd w
+argglobal
+enew | setl bt=help
+help 'expandtab'@en
+balt V:/init.lua
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 2282 - ((12 * winheight(0) + 13) / 26)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 2282
+normal! 033|
 wincmd w
 argglobal
 if bufexists(fnamemodify("V:/lua/plugins.lua", ":p")) | buffer V:/lua/plugins.lua | else | edit V:/lua/plugins.lua | endif
@@ -72,15 +100,18 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 302 - ((25 * winheight(0) + 26) / 53)
+let s:l = 19 - ((18 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 302
-normal! 0
+keepjumps 19
+normal! 03|
 wincmd w
+exe '1resize ' . ((&lines * 26 + 27) / 55)
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
+exe '2resize ' . ((&lines * 26 + 27) / 55)
+exe 'vert 2resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 3resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

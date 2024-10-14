@@ -22,6 +22,7 @@ return {
 		config = function()
 			require("nvim-treesitter.install").prefer_git = false
 			require("nvim-treesitter.configs").setup({
+				-- indent = {enable = true},
 				ensure_installed = {
 					--Install parsers in Neovim via :TSInstall c, :TSInstall cpp
 					"luadoc",
@@ -60,7 +61,6 @@ return {
 							["af"] = "@function.outer",
 							["if"] = "@function.inner",
 							["ac"] = "@class.outer",
-
 							["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
 							["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
 						},
@@ -220,7 +220,7 @@ return {
 				event = "VeryLazy",
 				should_attach = function(bufnr)
 					return vim.api.nvim_buf_get_name(bufnr):match("(.*).lua$")
-							or vim.api.nvim_buf_get_name(bufnr):match("(.*).py$")
+						or vim.api.nvim_buf_get_name(bufnr):match("(.*).py$")
 					-- or vim.api.nvim_buf_get_name(bufnr):match("(.*).txt$")
 				end,
 				sources = {
@@ -264,34 +264,37 @@ return {
 				},
 			},
 			"hrsh7th/cmp-nvim-lsp",
+			"onsails/lspkind.nvim",
 		},
 		config = function()
 			local cmp = require("cmp")
 			require("luasnip.loaders.from_vscode").lazy_load()
 			cmp.setup({
+				formatting = {
+					format = require("lspkind").cmp_format({
+						mode = "symbol_text",
+						maxwidth = 50,
+						show_labelDetails = false,
+						ellipsis_char = "...",
+					}),
+				},
+				completion = { completeopt = "menu, menuone, noinsert" }, -- no idea what it does
+				window = {
+					completion = cmp.config.window.bordered(),
+					-- documentation = cmp.config.window.bordered(),
+					documentation = false,
+				},
 				snippet = {
 					expand = function(args)
 						require("luasnip").lsp_expand(args.body)
 					end,
 				},
-				completion = { completeopt = "menu, menuone, noinsert" },
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-
-				-- mapping = {
-				-- 	["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select, count = 1 }),
-				-- 	["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select, count = 1 }),
-				-- 	["<C-y>"] = cmp.mapping.confirm({ select = true}),
-				-- 	["<C-e>"] = cmp.mapping.abort(),
-				-- 	["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				-- 	["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				-- 	["<C-f>"] = cmp.mapping.scroll_docs(4),
-				-- },
 
 				mapping = cmp.mapping.preset.insert({
-					["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+					["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+					["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+					["<C-n"] = cmp.mapping.select_next_item(),
+					["<C-p"] = cmp.mapping.select_prev_item(),
 				}),
 				-- mapping = cmp.mapping.preset.insert(),
 
