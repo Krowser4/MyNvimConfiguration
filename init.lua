@@ -1,36 +1,37 @@
 --https://neovim.io/doc/user/lua-guide.html
+--note: LspreStart, :LspStart :LspStop
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--branch=stable",
-    lazyrepo,
-    lazypath,
-  })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "failed to clone lazy.nvim:\n", "errormsg" },
-      { out, "warningmsg" },
-      { "\npress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--branch=stable",
+        lazyrepo,
+        lazypath,
+    })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "failed to clone lazy.nvim:\n", "errormsg" },
+            { out,                            "warningmsg" },
+            { "\npress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
--- vim.opt.indentexpr = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
+
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -59,23 +60,24 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require("lazy").setup({
-  spec = require("plugins"),
-  install = { missing = true, colorscheme = { "industry" } },
-  checker = { enabled = true },
+    spec = require("plugins"),
+    install = { missing = true, colorscheme = { "industry" }, },
+    checker = { enabled = true, notify = false, },
+    change_detection = { notify = false, },
 })
 StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    StartingFile = vim.fn.getcwd()
-  end,
+    callback = function()
+        StartingFile = vim.fn.getcwd()
+    end,
 })
 vim.keymap.set("n", "<leader>b", function()
-  local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
-  if batchFile ~= "" then
-    vim.cmd("!cmd /c " .. batchFile)
-  else
-    print("dsfsaf")
-  end
+    local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
+    if batchFile ~= "" then
+        vim.cmd("!cmd /c " .. batchFile)
+    else
+        print("No batch file found from: "..StartingFile)
+    end
 end)
 vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
 vim.keymap.set({ "i", "c" }, '""', '""<left>', MyOpts)
@@ -95,7 +97,6 @@ vim.keymap.set("x", "<leader>p", '"_dP', { silent = true })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", MyOpts)
 vim.keymap.set("n", "<C-u>", "<C-u>zz", MyOpts)
 vim.keymap.set("n", "J", "mzJ`z", MyOpts)
-
 --vs-like alt line movement
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", MyOpts)
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", MyOpts)
@@ -111,7 +112,7 @@ vim.keymap.set("v", "<C-c>", '"*y', MyOpts)
 
 --the "i have no idea what it does" corner
 vim.keymap.set("n", "<leader>z", "'z", MyOpts) --no idea why
-vim.keymap.set("n", "Q", "<nop>") --no idea what Q does
+vim.keymap.set("n", "Q", "<nop>")              --no idea what Q does
 vim.cmd.highlight({ "Error", "guibg=red" })
 vim.cmd.highlight({ "link", "Warning", "Error" })
 --vim.cmd([[ same but in one line mode
@@ -120,17 +121,17 @@ vim.cmd.highlight({ "link", "Warning", "Error" })
 --]])
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 --visual sugar
 vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
-    vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
-  end,
+    callback = function()
+        vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
+        vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+        vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+    end,
 })
 pcall(require("lualine").setup)
 pcall(vim.cmd.colorscheme("kanagawa-wave"))
