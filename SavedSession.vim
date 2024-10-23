@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd V:/lua
+cd V:/
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,9 +13,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 V:/init.lua
+badd +44 V:/init.lua
 badd +417 V:/lua/plugins.lua
 badd +8 V:/gameFromScratchSetup.txt
+badd +0 C:/startUtils.bat
 argglobal
 %argdel
 edit V:/init.lua
@@ -49,11 +50,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 137 - ((52 * winheight(0) + 26) / 53)
+let s:l = 44 - ((26 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 137
+keepjumps 44
 normal! 0
 wincmd w
 argglobal
@@ -79,7 +80,6 @@ normal! zt
 keepjumps 417
 normal! 020|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
 exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1

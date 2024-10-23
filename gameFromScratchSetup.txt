@@ -2,9 +2,10 @@
 @echo off
 subst v: C:\Users\Gabriel\AppData\Local\nvim
 subst w: C:\workInProgress
-pushd "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\"
-vcvarsall.bat x64
-popd
+subst t: C:\workTutorial
+REM pushd "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\"
+REM vcvarsall.bat x64
+REM popd
 
 - to open microsoft visual studio from command line
 start devenv

@@ -42,6 +42,7 @@ vim.opt.showmode = false
 -- vim.opt.wrap = false
 vim.opt.scrolloff = 999
 vim.opt.guicursor = "a:block"
+vim.opt.mouse = ""
 vim.opt.list = true
 vim.opt.listchars = { tab = "> ", trail = "·", nbsp = "␣" }
 vim.opt.inccommand = "split"
