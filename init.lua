@@ -49,12 +49,18 @@ vim.opt.inccommand = "split"
 vim.opt.laststatus = 2
 vim.g.have_nerd_font = true
 
+vim.opt.hlsearch = false
 vim.opt.incsearch = true
 --vim.opt.clipboard = "unnamed"
 vim.opt.modifiable = true
 vim.opt.autochdir = true
 
 vim.opt.shadafile = "NONE"
+
+-- don't know where the save file is, if there is a future problem check this block (like what happened in "shadafile")
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undofile = true
 
 MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
@@ -70,6 +76,9 @@ StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
         StartingFile = vim.fn.getcwd()
+        if require("lazy.status").has_updates then
+            require("lazy").update({ show = false, })
+        end
     end,
 })
 vim.keymap.set("n", "<leader>b", function()

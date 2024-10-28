@@ -245,12 +245,9 @@ return {
         dependencies = {
             {
                 "L3MON4D3/LuaSnip",
-                build = (function()
-                    if vim.fn.executable("make") == 0 then
-                        return
-                    end
+                build = function ()
                     return "make install_jsregexp"
-                end)(),
+                end,
                 dependencies = {
                     "saadparwaiz1/cmp_luasnip",
                     "rafamadriz/friendly-snippets",
