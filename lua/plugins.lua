@@ -398,18 +398,18 @@ return {
                 nested = true,
                 callback = function()
                     SessionLocation = vim.fn.getcwd()
-                    local saveFile = io.open(SessionLocation .. "/" .. SessionName .. ".vim", "r")
+                    local saveFile = io.open(SessionLocation .. "\\" .. SessionName .. ".vim", "r")
                     if saveFile then
                         SessionExists = true
                         saveFile:close()
-                        require("auto-session").RestoreSessionFromDir(SessionLocation, SessionName, false)
+                        require("auto-session").RestoreSessionFromDir(SessionLocation.."\\", SessionName, false)
                     end
                 end,
             })
             vim.api.nvim_create_autocmd("VimLeave", {
                 callback = function()
                     if SessionExists then
-                        require("auto-session").SaveSessionToDir(SessionLocation, SessionName, false)
+                        require("auto-session").SaveSessionToDir(SessionLocation.."\\", SessionName, false)
                     end
                 end,
             })
