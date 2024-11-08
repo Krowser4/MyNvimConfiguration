@@ -21,6 +21,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
+
+SessionLocation = vim.fn.getcwd()..".nvim\\"
+StartingFile = ""
+MyOpts = { noremap = true, silent = true }
+
 vim.opt.rtp:prepend(lazypath)
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -56,19 +61,16 @@ vim.opt.modifiable = true
 vim.opt.autochdir = true
 
 -- vim.opt.shadafile = "NONE"
+vim.opt.shadafile = SessionLocation .. "mySadaFile.shada"
 
--- don't know where the save file is, if there is a future problem check this block (like what happened in "shadafile")
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = vim.fn.getcwd()..".nvim\\";
+vim.opt.undodir = SessionLocation
 vim.opt.undofile = true
 
-MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-SessionLocation = vim.fn.getcwd() .. ".nvim\\"
-StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
         StartingFile = vim.fn.getcwd()
