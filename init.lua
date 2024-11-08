@@ -60,16 +60,17 @@ vim.opt.autochdir = true
 -- don't know where the save file is, if there is a future problem check this block (like what happened in "shadafile")
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.undodir = vim.fn.getcwd()..".nvim\\";
 vim.opt.undofile = true
 
 MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+SessionLocation = vim.fn.getcwd() .. ".nvim\\"
 StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
-        vim.opt.undodir = vim.fn.getcwd().."nvim\\";
         StartingFile = vim.fn.getcwd()
         if require("lazy.status").has_updates then
             require("lazy").update({ show = false, })

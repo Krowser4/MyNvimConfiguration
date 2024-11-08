@@ -13,9 +13,8 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 V:/init.lua
-badd +1 V:/lua/plugins.lua
-badd +1 V:/nvim/V\%\%init.lua
+badd +65 V:/init.lua
+badd +137 V:/lua/plugins.lua
 argglobal
 %argdel
 edit V:/init.lua
@@ -24,10 +23,7 @@ let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
-wincmd _ | wincmd |
-vsplit
-2wincmd h
-wincmd w
+1wincmd h
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -38,9 +34,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 78 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 78 + 118) / 236)
-exe 'vert 3resize ' . ((&columns * 78 + 118) / 236)
+exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -52,25 +47,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 26) / 53)
+let s:l = 65 - ((25 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 65
 normal! 0
-wincmd w
-argglobal
-enew
-file oil:///V/
-balt V:/init.lua
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
 wincmd w
 argglobal
 if bufexists(fnamemodify("V:/lua/plugins.lua", ":p")) | buffer V:/lua/plugins.lua | else | edit V:/lua/plugins.lua | endif
@@ -88,17 +70,15 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 446 - ((52 * winheight(0) + 26) / 53)
+let s:l = 140 - ((26 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 446
-normal! 0
+keepjumps 140
+normal! 049|
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 78 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 78 + 118) / 236)
-exe 'vert 3resize ' . ((&columns * 78 + 118) / 236)
+exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

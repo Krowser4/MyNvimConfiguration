@@ -377,7 +377,6 @@ return {
         },
         config = function()
             SessionName = "SavedSession"
-            SessionLocation = ""
             SessionExists = false
             require("auto-session").setup({
                 session_lens = { mappings = {} },
@@ -397,7 +396,6 @@ return {
                 pattern = "LazyDone",
                 nested = true,
                 callback = function()
-                    SessionLocation = vim.fn.getcwd() .. "nvim\\"
                     local saveFile = io.open(SessionLocation .. "\\" .. SessionName .. ".vim", "r")
                     if saveFile then
                         SessionExists = true
@@ -422,7 +420,9 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
         config = function()
             require("oil").setup({
-                -- default_file_explorer = false,
+                view_options = {
+                    show_hidden = true;
+                },
                 use_default_keymaps = false,
             })
             vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>")
