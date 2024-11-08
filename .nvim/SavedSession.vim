@@ -53,7 +53,7 @@ if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 64
-normal! 056|
+normal! 043|
 wincmd w
 argglobal
 if bufexists(fnamemodify("V:/lua/plugins.lua", ":p")) | buffer V:/lua/plugins.lua | else | edit V:/lua/plugins.lua | endif

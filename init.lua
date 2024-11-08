@@ -22,7 +22,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     end
 end
 
-SessionLocation = vim.fn.getcwd()..".nvim\\"
+SessionLocation = vim.fn.getcwd().."\\.nvim\\"
 StartingFile = ""
 MyOpts = { noremap = true, silent = true }
 
@@ -61,7 +61,7 @@ vim.opt.modifiable = true
 vim.opt.autochdir = true
 
 -- vim.opt.shadafile = "NONE"
-vim.opt.shadafile = SessionLocation .. "mySadaFile.shada"
+vim.opt.shadafile = SessionLocation .. "\\mySadaFile.shada"
 
 vim.opt.swapfile = false
 vim.opt.backup = false
