@@ -55,7 +55,7 @@ vim.opt.incsearch = true
 vim.opt.modifiable = true
 vim.opt.autochdir = true
 
-vim.opt.shadafile = "NONE"
+-- vim.opt.shadafile = "NONE"
 
 -- don't know where the save file is, if there is a future problem check this block (like what happened in "shadafile")
 vim.opt.swapfile = false
@@ -66,21 +66,24 @@ MyOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-require("lazy").setup({
-    spec = require("plugins"),
-    install = { missing = true, colorscheme = { "industry" }, },
-    checker = { enabled = true, notify = false, },
-    change_detection = { notify = false, },
-})
 StartingFile = ""
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
+        vim.opt.undodir = vim.fn.getcwd().."nvim\\";
         StartingFile = vim.fn.getcwd()
         if require("lazy.status").has_updates then
             require("lazy").update({ show = false, })
         end
     end,
 })
+
+require("lazy").setup({
+    spec = require("plugins"),
+    install = { missing = true, colorscheme = { "industry" }, },
+    checker = { enabled = true, notify = false, },
+    change_detection = { notify = false, },
+})
+
 vim.keymap.set("n", "<leader>b", function()
     local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
     if batchFile ~= "" then

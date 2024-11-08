@@ -397,7 +397,7 @@ return {
                 pattern = "LazyDone",
                 nested = true,
                 callback = function()
-                    SessionLocation = vim.fn.getcwd()
+                    SessionLocation = vim.fn.getcwd() .. "nvim\\"
                     local saveFile = io.open(SessionLocation .. "\\" .. SessionName .. ".vim", "r")
                     if saveFile then
                         SessionExists = true
