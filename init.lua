@@ -1,5 +1,7 @@
 --https://neovim.io/doc/user/lua-guide.html
 --note: LspreStart, :LspStart :LspStop
+--requisites:
+--  install ripgrep
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
