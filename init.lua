@@ -47,7 +47,7 @@ vim.opt.virtualedit = "block"
 vim.opt.termguicolors = true
 vim.opt.showmode = false
 -- vim.opt.wrap = false
-vim.opt.scrolloff = 999
+-- vim.opt.scrolloff = 999
 vim.opt.guicursor = "a:block"
 vim.opt.mouse = ""
 vim.opt.list = true
@@ -56,7 +56,7 @@ vim.opt.inccommand = "split"
 vim.opt.laststatus = 2
 vim.g.have_nerd_font = true
 
-vim.opt.hlsearch = false
+-- vim.opt.hlsearch = false
 vim.opt.incsearch = true
 --vim.opt.clipboard = "unnamed"
 vim.opt.modifiable = true
@@ -97,11 +97,12 @@ vim.keymap.set("n", "<leader>b", function()
         print("No batch file found from: "..StartingFile)
     end
 end)
+
 vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
 vim.keymap.set({ "i", "c" }, '""', '""<left>', MyOpts)
-vim.keymap.set({ "i", "c" }, "{<leader>", "{}", MyOpts)
-vim.keymap.set({ "i", "c" }, "[<leader>", "[]", MyOpts)
-vim.keymap.set({ "i", "c" }, "(<leader>", "()", MyOpts)
+vim.keymap.set({ "i", "c" }, "{<leader>", "{}<left>", MyOpts)
+vim.keymap.set({ "i", "c" }, "[<leader>", "[]<left>", MyOpts)
+vim.keymap.set({ "i", "c" }, "(<leader>", "()<left>", MyOpts)
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { silent = true })
@@ -112,9 +113,6 @@ vim.api.nvim_set_keymap("n", "<leader>h", ":noh<CR>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { silent = true })
 vim.keymap.set("x", "<leader>p", '"_dP', { silent = true })
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz", MyOpts)
-vim.keymap.set("n", "<C-u>", "<C-u>zz", MyOpts)
-vim.keymap.set("n", "J", "mzJ`z", MyOpts)
 --vs-like alt line movement
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", MyOpts)
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", MyOpts)
@@ -122,11 +120,22 @@ vim.keymap.set("n", "<A-k>", ":m .-2<CR>=<CR>", MyOpts)
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>=<CR>", MyOpts)
 vim.keymap.set("i", "<A-k>", "<esc>:m .-2<CR>=<CR>i", MyOpts)
 vim.keymap.set("i", "<A-j>", "<esc>:m .+1<CR>=<CR>i", MyOpts)
+
 -- obsidian-like copy paste
 vim.keymap.set("i", "<C-v>", '<esc>"*pa', MyOpts)
 vim.keymap.set("i", "<C-c>", '<esc>"*yya', MyOpts)
 vim.keymap.set("n", "<C-c>", '"*yy', MyOpts)
 vim.keymap.set("v", "<C-c>", '"*y', MyOpts)
+
+-- misc
+vim.keymap.set("n", "<C-d>", "<C-d>zz", MyOpts)
+vim.keymap.set("n", "<C-u>", "<C-u>zz", MyOpts)
+vim.keymap.set("n", "J", "mzJ`z", MyOpts)
+vim.keymap.set("n", "<A-l>", "V=", MyOpts)
+vim.keymap.set("i", "<A-l>", "<esc>V=a", MyOpts)
+vim.keymap.set("n", "c,", "T,vt,di ", MyOpts)
+vim.keymap.set("n", "ci,", "T(vt,di", MyOpts)
+vim.keymap.set("n", "ca,", "T,vt)di ", MyOpts)
 
 --the "i have no idea what it does" corner
 vim.keymap.set("n", "<leader>z", "'z", MyOpts) --no idea why
@@ -144,12 +153,25 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 --visual sugar
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = function()
-        vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
+        -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
+        vim.api.nvim_set_hl(0, "LineNr", { fg = "#707070" })
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffee00" })
         vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
         vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
     end,
+})
+vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
+    callback = function()
+        vim.api.nvim_command('setlocal cursorline')
+        vim.api.nvim_command('setlocal cursorlineopt=number')
+    end,
+})
+vim.api.nvim_create_autocmd({"BufLeave", "WinLeave"}, {
+    command = "setlocal nocursorline"
 })
 pcall(require("lualine").setup)
 pcall(vim.cmd.colorscheme("kanagawa-wave"))
