@@ -17,7 +17,7 @@ badd +1 V:/(ae)
 badd +143 V:/lua/plugins.lua
 badd +1 V:/.nvim/.tmp.a
 badd +92 V:/init.lua
-badd +0 V:/.gitignore
+badd +1 V:/.gitignore
 argglobal
 %argdel
 edit V:/init.lua
