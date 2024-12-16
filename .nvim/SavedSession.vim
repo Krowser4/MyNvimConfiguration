@@ -17,6 +17,7 @@ badd +1 V:/(ae)
 badd +143 V:/lua/plugins.lua
 badd +1 V:/.nvim/.tmp.a
 badd +92 V:/init.lua
+badd +0 V:/.gitignore
 argglobal
 %argdel
 edit V:/init.lua
@@ -36,8 +37,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
+exe 'vert 1resize ' . ((&columns * 118 + 118) / 236)
+exe 'vert 2resize ' . ((&columns * 117 + 118) / 236)
 argglobal
 balt V:/(ae)
 setlocal fdm=manual
@@ -80,8 +81,8 @@ normal! zt
 keepjumps 143
 normal! 02|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
-exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
+exe 'vert 1resize ' . ((&columns * 118 + 118) / 236)
+exe 'vert 2resize ' . ((&columns * 117 + 118) / 236)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
