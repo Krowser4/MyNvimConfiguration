@@ -139,6 +139,7 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local onAttach = function()
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+                vim.keymap.set("v", "K", "" )
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
                 vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = 0 })
                 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = 0 })
@@ -172,7 +173,7 @@ return {
             lspconfig.clangd.setup({
                 capabilities = capabilities,
                 on_attach = onAttach,
-                cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
+                cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose", },
                 init_options = {
                     fallback_flags = { "-std=c++17" },
                 },

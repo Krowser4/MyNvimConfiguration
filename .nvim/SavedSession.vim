@@ -13,9 +13,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +174 V:/init.lua
-badd +17 V:/lua/plugins.lua
+badd +1 V:/(ae)
+badd +143 V:/lua/plugins.lua
 badd +1 V:/.nvim/.tmp.a
+badd +92 V:/init.lua
 argglobal
 %argdel
 edit V:/init.lua
@@ -35,9 +36,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 87 + 88) / 176)
-exe 'vert 2resize ' . ((&columns * 88 + 88) / 176)
+exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 argglobal
+balt V:/(ae)
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -48,12 +50,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 174 - ((38 * winheight(0) + 21) / 43)
+let s:l = 92 - ((15 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 174
-normal! 053|
+keepjumps 92
+normal! 0
 wincmd w
 argglobal
 if bufexists(fnamemodify("V:/lua/plugins.lua", ":p")) | buffer V:/lua/plugins.lua | else | edit V:/lua/plugins.lua | endif
@@ -71,15 +73,15 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 17 - ((16 * winheight(0) + 21) / 43)
+let s:l = 143 - ((26 * winheight(0) + 26) / 53)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 17
-normal! 0
+keepjumps 143
+normal! 02|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 87 + 88) / 176)
-exe 'vert 2resize ' . ((&columns * 88 + 88) / 176)
+exe 'vert 1resize ' . ((&columns * 117 + 118) / 236)
+exe 'vert 2resize ' . ((&columns * 118 + 118) / 236)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

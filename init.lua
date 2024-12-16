@@ -89,21 +89,52 @@ require("lazy").setup({
     change_detection = { notify = false, },
 })
 
+-- vim.keymap.set("n", "<leader>b", function()
+--     local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
+--     if batchFile ~= "" then
+--         print(batchFile)
+--         vim.cmd("!cmd /c " .. batchFile)
+--     else
+--         print("No batch file found from: "..StartingFile)
+--     end
+-- end)
+
+-- vim.keymap.set("n", "<leader>b", function()
+--     local batchFile = vim.fn.findfile("build.bat", StartingFile .. "/**")
+--     if batchFile ~= "" then
+--         local batchFilePath = vim.fn.fnamemodify(batchFile, ":p:h")
+--         -- print("Batch file found: " .. batchFile)
+--         -- print("Switching to directory: " .. batchFilePath)
+--         vim.cmd("cd " .. batchFilePath)
+--         vim.cmd("!cmd /c build.bat")
+--         vim.cmd("cd -")  -- Switch back to the original directory
+--     else
+--         print("No batch file found from: " .. StartingFile)
+--     end
+-- end)
+
 vim.keymap.set("n", "<leader>b", function()
-    local batchFile = vim.fn.findfile("build.bat", StartingFile .. "**")
+    local batchFileToRun = "build.bat"
+    local batchFile = vim.fn.findfile(batchFileToRun, StartingFile .. "/**")
     if batchFile ~= "" then
-        vim.cmd("!cmd /c " .. batchFile)
+        local batchFilePath = vim.fn.fnamemodify(batchFile, ":p:h")
+        vim.cmd("cd " .. batchFilePath)
+        vim.cmd("!cmd /c " .. batchFileToRun)
+        vim.cmd("cd -")
     else
-        print("No batch file found from: "..StartingFile)
+        print("No batch file found from: " .. StartingFile)
     end
 end)
 
-vim.keymap.set({ "i", "c" }, "''", "''<left>", MyOpts)
-vim.keymap.set({ "i", "c" }, '""', '""<left>', MyOpts)
-vim.keymap.set({ "i", "c" }, "{<leader>", "{}<left>", MyOpts)
-vim.keymap.set({ "i", "c" }, "[<leader>", "[]<left>", MyOpts)
-vim.keymap.set({ "i", "c" }, "(<leader>", "()<left>", MyOpts)
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", { silent = true })
+vim.keymap.set({ "i", "c", "v", "s" }, "''", "''<left>", MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, '""', '""<left>', MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, "{{", "{}<left>", MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, "[[", "[]<left>", MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, "((", "()<left>", MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, "{<leader>", "{} ", MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, "[<leader>", "[] ", MyOpts)
+vim.keymap.set({ "i", "c", "v", "s" }, "(<leader>", "() ", MyOpts)
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l ", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", { silent = true })
@@ -134,8 +165,12 @@ vim.keymap.set("n", "J", "mzJ`z", MyOpts)
 vim.keymap.set("n", "<A-l>", "V=", MyOpts)
 vim.keymap.set("i", "<A-l>", "<esc>V=a", MyOpts)
 vim.keymap.set("n", "c,", "T,vt,di ", MyOpts)
-vim.keymap.set("n", "ci,", "T(vt,di", MyOpts)
-vim.keymap.set("n", "ca,", "T,vt)di ", MyOpts)
+-- vim.keymap.set("n", "c(,", "T(vt,di", MyOpts)
+-- vim.keymap.set("n", "c),", "T,vt)di ", MyOpts)
+-- vim.keymap.set("n", "c[,", "T[vt,di", MyOpts)
+-- vim.keymap.set("n", "c],", "T,vt]di ", MyOpts)
+-- vim.keymap.set("n", "c{,", "T{vt,di", MyOpts)
+-- vim.keymap.set("n", "c},", "T,vt}di ", MyOpts)
 
 --the "i have no idea what it does" corner
 vim.keymap.set("n", "<leader>z", "'z", MyOpts) --no idea why
@@ -155,15 +190,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --visual sugar
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
-vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function()
-        -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
-        vim.api.nvim_set_hl(0, "LineNr", { fg = "#707070" })
-        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffee00" })
-        vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
-        vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
-    end,
-})
 vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
     callback = function()
         vim.api.nvim_command('setlocal cursorline')
@@ -172,6 +198,15 @@ vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
 })
 vim.api.nvim_create_autocmd({"BufLeave", "WinLeave"}, {
     command = "setlocal nocursorline"
+})
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffee00" })
+        vim.api.nvim_set_hl(0, "LineNr", { fg = "#707070" })
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffee00" })
+        vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+        vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+    end,
 })
 pcall(require("lualine").setup)
 pcall(vim.cmd.colorscheme("kanagawa-wave"))
