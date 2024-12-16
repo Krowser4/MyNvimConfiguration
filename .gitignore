@@ -1,4 +1,2 @@
 /.nvim
-.nvim/SavedSession.vim
-.nvim/mySadaFile.shada
-.nvim/V%%.gitignore
+lazy-lock.json
