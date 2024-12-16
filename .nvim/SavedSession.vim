@@ -16,7 +16,7 @@ endif
 badd +1 V:/(ae)
 badd +143 V:/lua/plugins.lua
 badd +1 V:/.nvim/.tmp.a
-badd +92 V:/init.lua
+badd +1 V:/init.lua
 argglobal
 %argdel
 edit V:/init.lua
@@ -63,7 +63,7 @@ normal! 0
 wincmd w
 argglobal
 enew
-file oil:///V/.git/
+file oil:///V/
 balt V:/init.lua
 setlocal fdm=manual
 setlocal fde=0
