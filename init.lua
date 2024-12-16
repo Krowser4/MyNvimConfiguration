@@ -63,7 +63,7 @@ vim.opt.modifiable = true
 vim.opt.autochdir = true
 
 -- vim.opt.shadafile = "NONE"
-vim.opt.shadafile = SessionLocation .. "\\mySadaFile.shada"
+vim.opt.shadafile = SessionLocation .. "\\myShadaFile.shada"
 
 vim.opt.swapfile = false
 vim.opt.backup = false
