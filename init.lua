@@ -46,7 +46,7 @@ vim.opt.relativenumber = true
 vim.opt.virtualedit = "block"
 vim.opt.termguicolors = true
 vim.opt.showmode = false
--- vim.opt.wrap = false
+vim.opt.wrap = false
 -- vim.opt.scrolloff = 999
 vim.opt.guicursor = "a:block"
 vim.opt.mouse = ""
@@ -165,6 +165,7 @@ vim.keymap.set("n", "J", "mzJ`z", MyOpts)
 vim.keymap.set("n", "<A-l>", "V=", MyOpts)
 vim.keymap.set("i", "<A-l>", "<esc>V=a", MyOpts)
 vim.keymap.set("n", "c,", "T,vt,di ", MyOpts)
+-- vim.keymap.set({"n", "i", "v"}, "<RightAlt", "<C>", MyOpts) right alt dont work :c
 -- vim.keymap.set("n", "c(,", "T(vt,di", MyOpts)
 -- vim.keymap.set("n", "c),", "T,vt)di ", MyOpts)
 -- vim.keymap.set("n", "c[,", "T[vt,di", MyOpts)
@@ -207,6 +208,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
         vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
     end,
+})
+vim.api.nvim_create_autocmd("VimResized", {
+    -- command = ":wincmd =<CR>",
+    command = ":wincmd =",
 })
 pcall(require("lualine").setup)
 pcall(vim.cmd.colorscheme("kanagawa-wave"))
