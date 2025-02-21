@@ -405,9 +405,6 @@ return {
                 vim.opt.undofile = true
             end, {})
             vim.api.nvim_create_user_command("Exit", function()
-                vim.opt.shadafile = "NONE"
-                vim.opt.undofile = false
-                vim.opt.undodir = ""
                 SessionExists = false
                 vim.cmd("wqa")
             end, {})
