@@ -25,6 +25,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 SessionLocation = vim.fn.getcwd().."\\.nvim\\"
+SessionName = "SavedSession"
+SessionExists = false
+SaveFileEarly = io.open(SessionLocation .. "\\" .. SessionName .. ".vim", "r")
 StartingFile = ""
 MyOpts = { noremap = true, silent = true }
 
@@ -63,12 +66,22 @@ vim.opt.modifiable = true
 vim.opt.autochdir = true
 
 -- vim.opt.shadafile = "NONE"
-vim.opt.shadafile = SessionLocation .. "\\myShadaFile.shada"
+-- vim.opt.shadafile = SessionLocation .. "\\myShadaFile.shada"
+-- vim.opt.undodir = SessionLocation
+-- vim.opt.undofile = true
+
+if SaveFileEarly then
+    vim.opt.shadafile = SessionLocation .. "\\myShadaFile.shada"
+    vim.opt.undodir = SessionLocation
+    vim.opt.undofile = true
+else
+    vim.opt.shadafile = "NONE"
+    vim.opt.undofile = false
+    vim.opt.undodir = ""
+end
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = SessionLocation
-vim.opt.undofile = true
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

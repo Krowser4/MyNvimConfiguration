@@ -384,8 +384,13 @@ return {
             "nvim-telescope/telescope.nvim",
         },
         config = function()
-            SessionName = "SavedSession"
-            SessionExists = false
+            -- SessionName = "SavedSession"
+            -- SessionExists = false
+            if SaveFileEarly then
+                SessionExist = true
+            else
+                SessionExist = false
+            end
             require("auto-session").setup({
                 session_lens = { mappings = {} },
                 enabled = false,
@@ -395,8 +400,14 @@ return {
             vim.api.nvim_create_user_command("Save", function()
                 require("auto-session").SaveSessionToDir(SessionLocation, SessionName)
                 SessionExists = true
+                vim.opt.shadafile = SessionLocation .. "\\myShadaFile.shada"
+                vim.opt.undodir = SessionLocation
+                vim.opt.undofile = true
             end, {})
             vim.api.nvim_create_user_command("Exit", function()
+                vim.opt.shadafile = "NONE"
+                vim.opt.undofile = false
+                vim.opt.undodir = ""
                 SessionExists = false
                 vim.cmd("wqa")
             end, {})
