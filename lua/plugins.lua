@@ -403,7 +403,7 @@ return {
                 vim.opt.shadafile = SessionLocation .. "\\myShadaFile.shada"
                 vim.opt.undodir = SessionLocation
                 vim.opt.undofile = true
-                vim.cmd('silent !attrib +h ' .. string.gsub(SessionLocation, "\\$", "") .. ' > nul 2>&1')
+                vim.cmd('silent !attrib +h ' .. string.gsub(SessionLocation, "\\$", ""))
             end, {})
             vim.api.nvim_create_user_command("Exit", function()
                 SessionExists = false
