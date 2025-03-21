@@ -298,8 +298,10 @@ return {
                 mapping = cmp.mapping.preset.insert({
                     -- ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
                     -- ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+                    -- ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert}),
+                    -- ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert}),
                     ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert}),
-                    ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert}),
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace}),
                     ["<C-n"] = cmp.mapping.select_next_item(),
                     -- ["<C-h"] = cmp.mapping.jump(),
                     -- ["<C-l"] = cmp.mapping.jump(-1),

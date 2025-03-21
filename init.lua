@@ -31,6 +31,9 @@ SaveFileEarly = io.open(SessionLocation .. "\\" .. SessionName .. ".vim", "r")
 StartingFile = ""
 MyOpts = { noremap = true, silent = true }
 
+vim.lsp.log.set_level(vim.log.levels.OFF)
+-- vim.lsp.log.set_level(vim.log.levels.ERROR)
+
 vim.opt.rtp:prepend(lazypath)
 vim.opt.splitright = true
 vim.opt.splitbelow = true
