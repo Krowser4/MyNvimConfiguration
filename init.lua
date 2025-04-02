@@ -49,8 +49,9 @@ vim.opt.softtabstop = 4
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.opt.virtualedit = "block"
-vim.opt.termguicolors = true
+-- vim.opt.virtualedit = "block"
+-- vim.opt.termguicolors = true
+vim.opt.termguicolors = false
 vim.opt.showmode = false
 vim.opt.wrap = false
 -- vim.opt.scrolloff = 999
@@ -150,7 +151,7 @@ vim.keymap.set({ "i", "c", "v", "s" }, "((", "()<left>", MyOpts)
 vim.keymap.set({ "i", "c", "v", "s" }, "{<leader>", "{} ", MyOpts)
 vim.keymap.set({ "i", "c", "v", "s" }, "[<leader>", "[] ", MyOpts)
 vim.keymap.set({ "i", "c", "v", "s" }, "(<leader>", "() ", MyOpts)
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l ", { silent = true })
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", { silent = true })
