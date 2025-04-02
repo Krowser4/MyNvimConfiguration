@@ -21,9 +21,12 @@ return {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
+            local custom16color = require'lualine.themes.16color'
+            custom16color.normal.b.bg = "#282828"
             require('lualine').setup({
                 options = {
-                    theme = '16color'
+                    -- theme = '16color'
+                    theme = custom16color
                 },
                 sections = {
                     lualine_a = {'mode'},
