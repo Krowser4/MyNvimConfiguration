@@ -328,6 +328,7 @@ return {
                     -- ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert}),
                     ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert}),
                     ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace}),
+                    ["<C-p"] = cmp.mapping.select_prev_item(),
                     ["<C-n"] = cmp.mapping.select_next_item(),
                     -- ["<C-h"] = cmp.mapping.jump(),
                     -- ["<C-l"] = cmp.mapping.jump(-1),
@@ -350,12 +351,12 @@ return {
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
-                    { name = "buffer" },
                     { name = "path" },
                     {
                         name = "lazydev",
                         group_index = 0,
                     },
+                    { name = "buffer" },
                 }),
             })
             -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
