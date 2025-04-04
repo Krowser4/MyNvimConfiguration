@@ -23,6 +23,9 @@ return {
         config = function()
             local custom16color = require'lualine.themes.16color'
             custom16color.normal.b.bg = "#282828"
+            custom16color.inactive.a.bg = "#232323"
+            custom16color.inactive.b.bg = "#232323"
+            custom16color.inactive.c.bg = "#232323"
             require('lualine').setup({
                 options = {
                     -- theme = '16color'
