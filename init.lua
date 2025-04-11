@@ -34,6 +34,8 @@ MyOpts = { noremap = true, silent = true }
 vim.lsp.log.set_level(vim.log.levels.OFF)
 -- vim.lsp.log.set_level(vim.log.levels.ERROR)
 
+vim.opt.ignorecase = true
+
 vim.opt.rtp:prepend(lazypath)
 vim.opt.splitright = true
 vim.opt.splitbelow = true
