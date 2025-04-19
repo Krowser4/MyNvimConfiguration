@@ -1,3 +1,20 @@
+local function RenameAndSave()
+    local current_name = vim.fn.expand('<cword>')
+    local new_name = vim.fn.input("New Name > ", current_name)
+    if not new_name or #new_name == 0 or new_name == current_name then
+        return
+    end
+    local position_params = vim.lsp.util.make_position_params()
+    position_params.newName = new_name
+    vim.lsp.buf_request(0, "textDocument/rename", position_params, function(err, result, ctx, config)
+        vim.lsp.handlers["textDocument/rename"](err, result, ctx, config)
+        if result and result.changes then
+            vim.tbl_count(result.changes)
+            vim.cmd("silent! wa");
+        end
+    end)
+end
+
 local weInInit = vim.cmd("echo expand('%:t')") == [[C:\Users\Gabriel\AppData\Local\nvim\plugins.lua]]
 return {
     "morhetz/gruvbox",
@@ -164,6 +181,7 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = { "hrsh7th/cmp-nvim-lsp" },
         config = function()
+
             local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local onAttach = function()
@@ -177,8 +195,9 @@ return {
                 vim.keymap.set("n", "<A-p>", vim.diagnostic.goto_prev, { buffer = 0 })
                 -- vim.keymap.set("n", "<leader>p", vim.diagnostic.goto_prev, { buffer = 0 })
                 vim.keymap.set("n", "<leader>El", "<cmd>Telescope diagnostics<CR>", { buffer = 0 })
-                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
                 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0 })
+                -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
+                vim.keymap.set("n", "<leader>rn", RenameAndSave, { buffer = 0 })
             end
             lspconfig.gdscript.setup({
                 capabilities = capabilities,
