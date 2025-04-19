@@ -1,18 +1,29 @@
 local function RenameAndSave()
     local current_name = vim.fn.expand('<cword>')
-    local new_name = vim.fn.input("New Name > ", current_name)
-    if not new_name or #new_name == 0 or new_name == current_name then
-        return
-    end
     local position_params = vim.lsp.util.make_position_params()
-    position_params.newName = new_name
-    vim.lsp.buf_request(0, "textDocument/rename", position_params, function(err, result, ctx, config)
-        vim.lsp.handlers["textDocument/rename"](err, result, ctx, config)
-        if result and result.changes then
-            vim.tbl_count(result.changes)
-            vim.cmd("silent! wa");
+
+    vim.lsp.buf_request(0, "textDocument/prepareRename", position_params, function(err, result, ...)
+        if err or not result then
+            local msg = err.message
+            vim.notify(msg, vim.log.levels.INFO)
+            return
         end
+        local new_name = vim.fn.input("New Name > ", current_name)
+        if not new_name or #new_name == 0 or new_name == current_name then
+            return
+        end
+        position_params.newName = new_name
+        local rename_params = vim.lsp.util.make_position_params()
+        rename_params.newName = new_name
+        vim.lsp.buf_request(0, "textDocument/rename", rename_params, function(rename_err,rename_result, rename_ctx,rename_config)
+            vim.lsp.handlers["textDocument/rename"](rename_err,rename_result, rename_ctx,rename_config)
+            if rename_result and rename_result.changes then
+                vim.tbl_count(rename_result.changes)
+                vim.cmd("silent! wa");
+            end
+        end)
     end)
+
 end
 
 local weInInit = vim.cmd("echo expand('%:t')") == [[C:\Users\Gabriel\AppData\Local\nvim\plugins.lua]]
